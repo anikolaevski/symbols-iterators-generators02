@@ -1,81 +1,53 @@
+/* eslint-disable no-plusplus */
 import { Character } from '../src/js/Character';
 import { Team } from '../src/js/Team';
 
 test('Test Team add()', () => {
   const myTeam = new Team();
-  const obj = new Character({ name: 'Иван', health: '100', level: '80' });
+  const obj = new Character(
+    {
+      name: 'Оби Ван Кеноби',
+      type: 'Джедай',
+      health: '100',
+      level: '80',
+      attack: 40,
+      defense: 10,
+    },
+  );
   myTeam.add(obj);
 
-  const expected = true;
-  const result = myTeam.members.has(obj);
+  const result = Team.m.members[0];
 
-  expect(result).toBe(expected);
+  expect(result).toEqual(obj);
 });
 
-test('Test Team addAll()', () => {
+test('Test iteration', () => {
+  const myObj = [];
+  myObj.push(new Character({
+    name: 'Оби Ван Кеноби', health: '100', level: '80', type: 'Джедай', attack: 40, defense: 10,
+  }));
+  myObj.push(new Character({
+    name: 'Дарт Сидиус', health: '100', level: '80', type: 'Ситх', attack: 40, defense: 10,
+  }));
+  myObj.push(new Character({
+    name: 'Люк Сайуокер', health: '100', level: '80', type: 'Джедай', attack: 40, defense: 10,
+  }));
+  myObj.push(new Character({
+    name: 'Анакин Сайуокер', health: '100', level: '80', type: 'Джедай', attack: 40, defense: 10,
+  }));
+  myObj.push(new Character({
+    name: 'Лея Органа', health: '100', level: '80', type: 'Джедай', attack: 40, defense: 10,
+  }));
+  myObj.push(new Character({
+    name: 'Хан Соло', health: '100', level: '80', type: 'Человек', attack: 40, defense: 10,
+  }));
   const myTeam = new Team();
-  const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-  const obj2 = new Character({ name: 'Петр', health: '100', level: '80' });
-  myTeam.addAll(obj1, obj2);
-
-  const expected = 2;
-  const result = myTeam.members.size;
-
-  expect(result).toBe(expected);
-});
-
-test('Test Team toArray()', () => {
-  const myTeam = new Team();
-  const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-  const obj2 = new Character({ name: 'Петр', health: '100', level: '80' });
-  myTeam.addAll(obj1, obj2);
-
-  const expected = [obj1, obj2];
-  const result = myTeam.toArray();
-
-  expect(result).toEqual(expected);
-});
-
-test('Test Team delete()', () => {
-  const myTeam = new Team();
-  const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-  const obj2 = new Character({ name: 'Петр', health: '100', level: '80' });
-  myTeam.addAll(obj1, obj2);
-  myTeam.delete(obj2);
-  const expected = false;
-  const result = myTeam.members.has(obj2);
-
-  expect(result).toBe(expected);
-});
-
-test('Test Team delete() non-existing', () => {
-  const myTeam = new Team();
-  const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-  const obj2 = new Character({ name: 'Петр', health: '100', level: '80' });
-  const obj3 = new Character({ name: 'Сидор', health: '100', level: '80' });
-  myTeam.addAll(obj1, obj2);
-  myTeam.delete(obj3);
-  const expected = 2;
-  const result = myTeam.members.size;
-
-  expect(result).toBe(expected);
-});
-
-test('Test Throw error on duplicate add', () => {
-  function totest() {
-    const myTeam = new Team();
-    const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-    myTeam.add(obj1);
-    myTeam.add(obj1);
+  for (const obj of myObj) {
+    myTeam.add(obj);
   }
-  expect(totest).toThrow();
-});
-
-test('Test Throw error on duplicate mass addition', () => {
-  function totest() {
-    const myTeam = new Team();
-    const obj1 = new Character({ name: 'Иван', health: '100', level: '80' });
-    myTeam.addAll(obj1, obj1);
+  //
+  let k = 0;
+  for (const obj of myTeam) {
+    expect(obj).toEqual(myObj[k++]);
   }
-  expect(totest).toThrow();
 });

@@ -1,57 +1,32 @@
 /* eslint-disable no-plusplus */
-/* eslint-disable require-yield */
-export default class Team {
-  constructor(obj) {
-    this.seq = Team.newCounter();
-    this.name = obj.name;
-    this.type = obj.type;
-    this.health = obj.health;
-    this.level = obj.level;
-    this.attack = obj.attack;
-    this.defence = obj.defence;
-    Team.instances();
-    Team.instances.all.push(this);
+// eslint-disable-next-line import/prefer-default-export
+export class Team {
+  constructor() {
+    Team.m.members = [];
+    // this.last = 0;
+    Team.m.last = 0;
   }
 
-  // eslint-disable-next-line generator-star-spacing
+  // eslint-disable-next-line class-methods-use-this
+  add(obj) {
+    Team.m.members.push(obj);
+    // this.last++;
+    Team.m.last++;
+  }
+
+  static m() {}
+
+  // eslint-disable-next-line class-methods-use-this
   *[Symbol.iterator]() {
-    let current = this.seq;
-    const last = Team.maxCounter();
     // метод должен вернуть объект с методом next()
+    let current = 0;
     return {
       next() {
-        if (current <= last) {
-          return {
-            done: false,
-            // eslint-disable-next-line no-plusplus
-            value: Team.instances.all[current++],
-          };
-        }
-        return {
-          done: true,
-        };
-      },
+        // console.log(current, Team.m.last);
+      if (current < Team.m.last) {
+        const x = Team.m.members[current++];
+        yield x;
+      };
     };
-  }
-
-  // Генерация номера объекта
-  static newCounter() {
-    if (typeof (Team.newCounter.counter) === 'undefined') {
-      Team.newCounter.counter = 0;
-    }
-    return ++Team.newCounter.counter;
-  }
-
-  // К-во объектов
-  static maxCounter() {
-    return Team.newCounter.counter;
-  }
-
-  // Все объекты класса
-  static instances() {
-    if (typeof (Team.instances.all) === 'undefined') {
-      Team.instances.all = [];
-    }
-    return Team.instances.all;
   }
 }

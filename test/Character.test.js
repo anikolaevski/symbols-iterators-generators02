@@ -4,13 +4,13 @@ import {
 
 test('Test Character', () => {
   const sourceData = {
-    name: 'Персонаж', health: 10, level: 2,
+    name: 'Оби Ван Кеноби',
+    type: 'Джедай',
+    health: '100',
+    level: '80',
+    attack: 40,
+    defense: 10,
   };
   const result = new Character(sourceData);
-  const expected = {
-    name: 'Персонаж',
-    health: 10,
-    level: 2,
-  };
-  expect(result).toEqual(expected);
+  expect(result).toEqual(sourceData);
 });
