@@ -11,16 +11,17 @@ export class Team {
     this.last++;
   }
 
-  *[Symbol.iterator]() {
+  [Symbol.iterator]() {
     const { members, last } = this;
     let current = 0;
-    // return {
-      // next() {
-        // console.log(current, Team.m.last);
-      if (current < this.last) {
-        const x = this.members[current++];
-        yield x;
-      };
-    // };
-  // }
+    function* next() {
+      if (current < last) {
+        const x = members[current++];
+        yield { done: false, value: x };
+      } else {
+        yield { done: true };
+      }
+    }
+    return next();
+  }
 }
