@@ -16,7 +16,7 @@ test('Test Team add()', () => {
   );
   myTeam.add(obj);
 
-  const result = Team.m.members[0];
+  const result = myTeam.members[0];
 
   expect(result).toEqual(obj);
 });

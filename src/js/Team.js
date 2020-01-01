@@ -15,11 +15,8 @@ export class Team {
     const { members, last } = this;
     let current = 0;
     function* next() {
-      if (current < last) {
-        const x = members[current++];
-        yield { done: false, value: x };
-      } else {
-        yield { done: true };
+      for (current = 0; current < last; current++) {
+        yield members[current];
       }
     }
     return next();
